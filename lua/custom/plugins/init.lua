@@ -2,6 +2,9 @@
 --  I promise not to create any merge conflicts in this directory :)
 --
 -- See the kickstart.nvim README for more information
+
+vim.g.kommentary_create_default_mappings = false
+
 return {
   { 'github/copilot.vim' },
   {
@@ -81,12 +84,15 @@ return {
   },
 
   {
-    'numToStr/Comment.nvim',
-    opts = {
-      -- add any options here
-    },
+    'b3nj5m1n/kommentary',
     config = function()
-      require('Comment').setup()
+      print 'Kommentary setup'
+      vim.keymap.set('n', '<C-k><C-c>', '<Plug>kommentary_line_default', { noremap = false, desc = '[K]omment [Current] line' })
+      vim.keymap.set('x', '<C-k><C-c>', '<Plug>kommentary_visual_default', { noremap = false, desc = '[K]omment [Visual] selection' })
+      vim.keymap.set('n', '<C-k><C-u>', '<Plug>kommentary_line_default', { noremap = false, desc = '[U]ncomment [Current] line' })
+      vim.keymap.set('x', '<C-k><C-u>', '<Plug>kommentary_visual_default', { noremap = false, desc = '[U]ncomment [Visual] selection' })
+      -- Visual
+      -- vim.keymap.set('x', '<C-k><C-c>', '<Plug>kommentary_line_default', { noremap = false, desc = '[K]omment [Visual] selection' })
     end,
   },
 }
