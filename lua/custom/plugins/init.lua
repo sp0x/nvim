@@ -52,12 +52,16 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
+      vim.keymap.set('n', '<leader>G', '<cmd>Git<CR>', { desc = '[G]it' })
       vim.keymap.set('n', '<leader>gs', '<cmd>Git status<CR>', { desc = 'Git [S]tatus' })
       vim.keymap.set('n', '<leader>gd', '<cmd>Git diff<CR>', { desc = 'Git [D]iff' })
       vim.keymap.set('n', '<leader>gc', '<cmd>Git commit<CR>', { desc = 'Git [C]ommit' })
       vim.keymap.set('n', '<leader>gp', '<cmd>Git push<CR>', { desc = 'Git [P]ush' })
       vim.keymap.set('n', '<leader>ga', '<cmd>Git add %<CR>', { desc = 'Git [A]dd' })
       vim.keymap.set('n', '<leader>gl', '<cmd>Git log<CR>', { desc = 'Git [L]og' })
+      vim.keymap.set('n', '<leader>gb', '<cmd>Git blame<CR>', { desc = '[G]it [b]lame' })
+      -- inline blame
+      vim.keymap.set('n', '<leader>gb', '<cmd>Git blame<CR>', { desc = '[G]it [b]lame' })
     end,
   },
 
@@ -96,16 +100,24 @@ return {
   },
 
   {
-    'kevinhwang91/nvim-ufo',
-    dependencies = {
-      'kevinhwang91/promise-async',
-    },
+    'm-demare/attempt.nvim', -- No need to specify plenary as dependency
     config = function()
-      require('ufo').setup {
-        provider_selector = function(bufnr, filetype, buftype)
-          return { 'treesitter', 'indent' }
-        end,
+      local attempt = require 'attempt'
+      attempt.setup {
+        ext_options = { 'lua', 'js', 'py', 'cpp', 'c', 'json', 'ts', 'tsx', 'html', 'css', 'scss', 'md', 'sh', 'yaml', 'toml' },
       }
+      function map(mode, l, r, opts)
+        opts = opts or {}
+        opts = vim.tbl_extend('force', { silent = true }, opts)
+        vim.keymap.set(mode, l, r, opts)
+      end
+
+      map('n', '<leader>an', attempt.new_select, { desc = '[A]ttempt with ex' }) -- new attempt, selecting extension
+      map('n', '<leader>ai', attempt.new_input_ext, { desc = '[A]ttempt without ext' }) -- new attempt, inputing extension
+      map('n', '<leader>ar', attempt.run, { desc = '[A]ttempt [r]un' }) -- run attempt
+      map('n', '<leader>ad', attempt.delete_buf, { desc = '[A]ttempt [d]elete buf' }) -- delete attempt from current buffer
+      map('n', '<leader>ac', attempt.rename_buf, { desc = '[A]ttempt rename buffer' }) -- rename attempt from current buffer
+      map('n', '<leader>al', 'Telescope attempt') -- search through attempts
     end,
   },
 }
