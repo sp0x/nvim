@@ -120,4 +120,25 @@ return {
       map('n', '<leader>al', 'Telescope attempt') -- search through attempts
     end,
   },
+  {
+    -- HTTP REST-Client Interface
+    'mistweaverco/kulala.nvim',
+    opts = {},
+    config = function() end,
+  },
+  {
+    'AndrewRadev/splitjoin.vim',
+    opts = {},
+    config = function() end,
+  },
+  {
+    'justinmk/vim-sneak',
+    config = function()
+      vim.keymap.set('n', 'f', '<Plug>Sneak_f', { noremap = false, desc = 'Sneak [f]ind' })
+      vim.keymap.set('n', 'F', '<Plug>Sneak_F', { noremap = false, desc = 'Sneak [F]ind' })
+      vim.keymap.set('n', 't', '<Plug>Sneak_t', { noremap = false, desc = 'Sneak [t]ill' })
+      vim.keymap.set('n', 'T', '<Plug>Sneak_T', { noremap = false, desc = 'Sneak [T]ill' })
+      vim.keymap.set('n', 's', '<Plug>Sneak_s', { noremap = false, desc = '[s]neak' })
+    end,
+  },
 }
