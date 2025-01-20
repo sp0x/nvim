@@ -141,4 +141,8 @@ return {
       vim.keymap.set('n', 's', '<Plug>Sneak_s', { noremap = false, desc = '[s]neak' })
     end,
   },
+  {
+    'itmecho/neoterm.nvim',
+    config = function() end,
+  },
 }
