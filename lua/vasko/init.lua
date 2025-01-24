@@ -35,6 +35,9 @@ vim.opt.foldlevelstart = 3
 vim.opt.formatprg = 'jq .'
 vim.keymap.set('n', '<leader>kf', "<cmd>:%!jq '.'<CR>", { desc = 'Format json with jq' })
 
+-- Tab navigation
+vim.keymap.set({ 'n', 'i' }, '<C-S-n>', '<cmd>tabnew<CR>', { desc = 'Open a new tab' })
+
 -- Http files
 vim.filetype.add {
   extension = {

@@ -142,14 +142,26 @@ return {
     end,
   },
   {
-    'itmecho/neoterm.nvim',
-    config = function() end,
-  },
-  {
     'smartpde/telescope-recent-files',
     config = function()
       require('telescope').load_extension 'recent_files'
       vim.api.nvim_set_keymap('n', '<Leader><Leader>', [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], { noremap = true, silent = true })
     end,
+  },
+  {
+    'nvimdev/lspsaga.nvim',
+    config = function()
+      require('lspsaga').setup {
+        ui = {},
+      }
+      vim.keymap.set('n', '<C-A-t>', '<cmd>Lspsaga term_toggle<CR>', { desc = 'LSP [T]erminal toggle' })
+      vim.keymap.set('n', '<leader>lf', '<cmd>Lspsaga finder<CR>', { desc = '[L]sp [F]ind all' })
+      vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
+      vim.keymap.set('i', '<C-S-k>', '<cmd>Lspsaga hover_doc<CR>', { desc = '[L]sp docs' })
+    end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons', -- optional
+    },
   },
 }
