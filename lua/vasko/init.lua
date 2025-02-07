@@ -46,3 +46,22 @@ vim.filetype.add {
 }
 
 vim.opt.guicursor = ''
+
+-- Python settings
+local python_exe = vim.fn.executable 'python3' -- Or "python" if you prefer
+
+if python_exe ~= 0 then -- Check if python3 is executable
+  vim.g.python3_host_prog = vim.fn.exepath 'python3'
+  print('Python 3 executable found: ' .. vim.g.python3_host_prog)
+else
+  print 'Warning: Python 3 executable not found. Check your PATH.'
+
+  -- Fallback to 'python' if 'python3' is not found.
+  python_exe = vim.fn.executable 'python'
+  if python_exe ~= 0 then
+    vim.g.python_host_prog = vim.fn.exepath 'python'
+    print('Python executable found: ' .. vim.g.python_host_prog)
+  else
+    print 'Warning: Python executable not found. Check your PATH.'
+  end
+end
