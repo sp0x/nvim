@@ -38,6 +38,9 @@ vim.keymap.set('n', '<leader>kf', "<cmd>:%!jq '.'<CR>", { desc = 'Format json wi
 -- Tab navigation
 vim.keymap.set({ 'n', 'i' }, '<C-S-n>', '<cmd>tabnew<CR>', { desc = 'Open a new tab' })
 
+-- LSP
+vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open LSP [e]rror diagnostic' })
+
 -- Http files
 vim.filetype.add {
   extension = {
@@ -50,7 +53,7 @@ vim.opt.guicursor = ''
 -- Python settings
 local python_exe = vim.fn.executable 'python3' -- Or "python" if you prefer
 
-if python_exe ~= 0 then -- Check if python3 is executable
+if python_exe ~= 0 then                        -- Check if python3 is executable
   vim.g.python3_host_prog = vim.fn.exepath 'python3'
   print('Python 3 executable found: ' .. vim.g.python3_host_prog)
 else

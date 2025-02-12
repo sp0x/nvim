@@ -90,10 +90,14 @@ return {
   {
     'b3nj5m1n/kommentary',
     config = function()
-      vim.keymap.set('n', '<C-k><C-c>', '<Plug>kommentary_line_default', { noremap = false, desc = '[K]omment [Current] line' })
-      vim.keymap.set('x', '<C-k><C-c>', '<Plug>kommentary_visual_default', { noremap = false, desc = '[K]omment [Visual] selection' })
-      vim.keymap.set('n', '<C-k><C-u>', '<Plug>kommentary_line_default', { noremap = false, desc = '[U]ncomment [Current] line' })
-      vim.keymap.set('x', '<C-k><C-u>', '<Plug>kommentary_visual_default', { noremap = false, desc = '[U]ncomment [Visual] selection' })
+      vim.keymap.set('n', '<C-k><C-c>', '<Plug>kommentary_line_default',
+        { noremap = false, desc = '[K]omment [Current] line' })
+      vim.keymap.set('x', '<C-k><C-c>', '<Plug>kommentary_visual_default',
+        { noremap = false, desc = '[K]omment [Visual] selection' })
+      vim.keymap.set('n', '<C-k><C-u>', '<Plug>kommentary_line_default',
+        { noremap = false, desc = '[U]ncomment [Current] line' })
+      vim.keymap.set('x', '<C-k><C-u>', '<Plug>kommentary_visual_default',
+        { noremap = false, desc = '[U]ncomment [Visual] selection' })
       -- Visual
       -- vim.keymap.set('x', '<C-k><C-c>', '<Plug>kommentary_line_default', { noremap = false, desc = '[K]omment [Visual] selection' })
     end,
@@ -112,12 +116,12 @@ return {
         vim.keymap.set(mode, l, r, opts)
       end
 
-      map('n', '<leader>an', attempt.new_select, { desc = '[A]ttempt with ex' }) -- new attempt, selecting extension
+      map('n', '<leader>an', attempt.new_select, { desc = '[A]ttempt with ex' })        -- new attempt, selecting extension
       map('n', '<leader>ai', attempt.new_input_ext, { desc = '[A]ttempt without ext' }) -- new attempt, inputing extension
-      map('n', '<leader>ar', attempt.run, { desc = '[A]ttempt [r]un' }) -- run attempt
-      map('n', '<leader>ad', attempt.delete_buf, { desc = '[A]ttempt [d]elete buf' }) -- delete attempt from current buffer
-      map('n', '<leader>ac', attempt.rename_buf, { desc = '[A]ttempt rename buffer' }) -- rename attempt from current buffer
-      map('n', '<leader>al', 'Telescope attempt') -- search through attempts
+      map('n', '<leader>ar', attempt.run, { desc = '[A]ttempt [r]un' })                 -- run attempt
+      map('n', '<leader>ad', attempt.delete_buf, { desc = '[A]ttempt [d]elete buf' })   -- delete attempt from current buffer
+      map('n', '<leader>ac', attempt.rename_buf, { desc = '[A]ttempt rename buffer' })  -- rename attempt from current buffer
+      map('n', '<leader>al', 'Telescope attempt')                                       -- search through attempts
     end,
   },
   {
@@ -145,7 +149,8 @@ return {
     'smartpde/telescope-recent-files',
     config = function()
       require('telescope').load_extension 'recent_files'
-      vim.api.nvim_set_keymap('n', '<Leader><Leader>', [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], { noremap = true, silent = true })
+      vim.api.nvim_set_keymap('n', '<Leader><Leader>',
+        [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], { noremap = true, silent = true })
     end,
   },
   {
@@ -161,7 +166,7 @@ return {
     end,
     dependencies = {
       'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons', -- optional
+      'nvim-tree/nvim-web-devicons',     -- optional
     },
   },
   {
@@ -240,5 +245,17 @@ return {
     config = function()
       require('dap-python').setup '~/.local/share/nvim/mason/packages/debugpy/venv/bin/python'
     end,
+  },
+  {
+    'iamcco/markdown-preview.nvim',
+    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+    build = 'cd app && yarn install',
+    init = function()
+      vim.g.mkdp_filetypes = { 'markdown' }
+    end,
+    ft = { 'markdown' },
+  },
+  {
+    'mg979/vim-visual-multi',
   },
 }
