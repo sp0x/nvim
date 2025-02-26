@@ -214,6 +214,55 @@ return {
   },
   {
     'mfussenegger/nvim-dap',
+    dependencies = {
+      'leoluz/nvim-dap-go',
+      'rcarriga/nvim-dap-ui',
+      'mfussenegger/nvim-dap-python',
+      'theHamsta/nvim-dap-virtual-text',
+      'nvim-neotest/nvim-nio',
+      'williamboman/mason.nvim',
+    },
+    config = function()
+      local dap = require 'dap'
+      local ui = require 'dapui'
+      local virtualtext = require 'nvim-dap-virtual-text'
+
+      ui.setup()
+      -- Languages
+      require('dap-python').setup 'uv'
+      -- Virtual text
+      virtualtext.setup {
+        display_callback = function(variable)
+          if #variable.value > 15 then
+            return ' ' .. variable.value:sub(1, 15) .. '...'
+          end
+          return ' ' .. variable.value
+        end,
+      }
+      -- Keymaps
+      vim.keymap.set('n', '<F5>', dap.continue, { desc = 'DAP [C]ontinue' })
+      vim.keymap.set('n', '<F10>', dap.step_over, { desc = 'DAP [S]tep [O]ver' })
+      vim.keymap.set('n', '<F11>', dap.step_into, { desc = 'DAP [S]tep [I]nto' })
+      vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'DAP [S]tep [O]ut' })
+      vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'DAP [T]oggle [B]reakpoint' })
+      vim.keymap.set('n', '<leader>B', dap.set_breakpoint, { desc = 'DAP [S]et [B]reakpoint' })
+      vim.keymap.set('n', '<leader>!', function()
+        ui.eval(nil, { enter = true })
+      end, { desc = 'DAP [E]val' })
+
+      dap.listeners.before.attach.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.launch.dapui_config = function()
+        ui.open()
+      end
+      dap.listeners.before.event_terminated.dapui_config = function()
+        ui.close()
+      end
+      dap.listeners.before.event_exited.dapui_config = function()
+        ui.close()
+      end
+    end,
   },
   {
     'rcarriga/nvim-dap-ui',
