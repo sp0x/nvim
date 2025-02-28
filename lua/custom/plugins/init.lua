@@ -4,6 +4,14 @@
 -- See the kickstart.nvim README for more information
 
 vim.g.kommentary_create_default_mappings = false
+local js_languages = {
+  'typescript',
+  'typescriptreact',
+  'javascript',
+  'javascriptreact',
+  'svelte',
+  'vue',
+}
 
 return {
   { 'github/copilot.vim' },
@@ -219,6 +227,10 @@ return {
       'rcarriga/nvim-dap-ui',
       'mfussenegger/nvim-dap-python',
       'theHamsta/nvim-dap-virtual-text',
+      {
+        'microsoft/vscode-js-debug',
+        build = 'npm i --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+      },
       'nvim-neotest/nvim-nio',
       'williamboman/mason.nvim',
     },
@@ -226,10 +238,33 @@ return {
       local dap = require 'dap'
       local ui = require 'dapui'
       local virtualtext = require 'nvim-dap-virtual-text'
-
+      vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
       ui.setup()
       -- Languages
       require('dap-python').setup 'uv'
+      -- Nodejs
+      dap.configurations.typescript = {
+        {
+          type = 'node2',
+          request = 'launch',
+          name = 'Launch Program',
+          program = '${workspaceFolder}/${file}',
+          cwd = vim.fn.getcwd(),
+          runtimeExecutable = 'node',
+          runtimeArgs = { '--inspect-brk' },
+          sourceMaps = true,
+          protocol = 'inspector',
+          console = 'integratedTerminal',
+        },
+      }
+      dap.configurations.javascript = dap.configurations.typescript
+      local mason_path = vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/')
+      dap.adapters.node = {
+        type = 'executable',
+        command = 'node',
+        args = { mason_path .. 'package/node-debug2-adapter/out/src/nodeDebug.js' },
+      }
+
       -- Virtual text
       virtualtext.setup {
         display_callback = function(variable)
@@ -241,6 +276,7 @@ return {
       }
       -- Keymaps
       vim.keymap.set('n', '<F5>', dap.continue, { desc = 'DAP [C]ontinue' })
+      vim.keymap.set('n', '<C-F5>', dap.restart, { desc = 'DAP [R]estart', remap = true })
       vim.keymap.set('n', '<F10>', dap.step_over, { desc = 'DAP [S]tep [O]ver' })
       vim.keymap.set('n', '<F11>', dap.step_into, { desc = 'DAP [S]tep [I]nto' })
       vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'DAP [S]tep [O]ut' })
@@ -262,6 +298,13 @@ return {
       dap.listeners.before.event_exited.dapui_config = function()
         ui.close()
       end
+    end,
+  },
+  {
+    'daic0r/dap-helper.nvim',
+    dependencies = { 'rcarriga/nvim-dap-ui', 'mfussenegger/nvim-dap' },
+    config = function()
+      require('dap-helper').setup()
     end,
   },
   {
@@ -291,6 +334,18 @@ return {
     end,
   },
   {
+    'mxsdev/nvim-dap-vscode-js',
+    ft = 'javascript,typescript',
+    dependencies = { 'mfussenegger/nvim-dap', 'rcarriga/nvim-dap-ui' },
+    opts = {
+      debugger_path = vim.fn.stdpath 'data' .. '/lazy/vscode-js-debug',
+      adapters = { 'pwa-node', 'node', 'node-terminal' },
+    },
+  },
+  {
+    'mxsdev/nvim-dap-vscode-js',
+  },
+  {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     build = 'cd app && yarn install',
@@ -307,6 +362,8 @@ return {
     'stevearc/overseer.nvim',
     config = function()
       require('overseer').setup {}
+      -- Key bindings:
+      vim.keymap.set('n', '<leader>o', '<cmd>OverseerOpen<CR>|<cmd>OverseerRun<CR>', { desc = '[O]verseer run a task' })
     end,
   },
 }
