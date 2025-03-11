@@ -68,3 +68,8 @@ else
     print 'Warning: Python executable not found. Check your PATH.'
   end
 end
+
+vim.opt.title = true
+vim.opt.titlelen = 80 -- Maximum length of the title
+-- vim.opt.titlestring = '%{expand("%:p")} [%{mode()}]'
+vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')})]]
