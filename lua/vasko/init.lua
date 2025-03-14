@@ -73,3 +73,7 @@ vim.opt.title = true
 vim.opt.titlelen = 80 -- Maximum length of the title
 -- vim.opt.titlestring = '%{expand("%:p")} [%{mode()}]'
 vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')})]]
+vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
+vim.cmd 'colorscheme retrobox'
+-- wl-clipboard integration
+vim.opt.clipboard = 'unnamedplus'
