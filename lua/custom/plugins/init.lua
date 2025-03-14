@@ -4,14 +4,6 @@
 -- See the kickstart.nvim README for more information
 
 vim.g.kommentary_create_default_mappings = false
-local js_languages = {
-  'typescript',
-  'typescriptreact',
-  'javascript',
-  'javascriptreact',
-  'svelte',
-  'vue',
-}
 
 return {
   { 'github/copilot.vim' },
@@ -247,8 +239,6 @@ return {
       ui.setup {
         element_mappings = {
           stacks = {
-            icon = '',
-            name = 'Stacks',
             open = '<CR>',
             expand = 'o',
           },

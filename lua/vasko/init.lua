@@ -48,7 +48,8 @@ vim.filetype.add {
   },
 }
 
-vim.opt.guicursor = ''
+-- use a fat cursor
+-- vim.opt.guicursor = ''
 
 -- Python settings
 local python_exe = vim.fn.executable 'python3' -- Or "python" if you prefer
