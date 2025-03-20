@@ -40,6 +40,7 @@ vim.keymap.set({ 'n', 'i' }, '<C-S-n>', '<cmd>tabnew<CR>', { desc = 'Open a new 
 
 -- LSP
 vim.keymap.set('n', '<leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', { desc = 'Open LSP [e]rror diagnostic' })
+vim.keymap.set('n', '<leader>lr', '<cmd>LspRestart<CR>', { desc = 'Restart LSP' })
 
 -- Http files
 vim.filetype.add {
