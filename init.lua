@@ -673,7 +673,7 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         gopls = {},
-        pyright = {},
+        -- pyright = {},
         zls = {},
         jq = {},
         dockerls = {},
@@ -687,7 +687,6 @@ require('lazy').setup({
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         -- ts_ls = {},
-        -- csharp_ls = {},
         -- C#
         csharp_ls = {},
         -- omnisharp = {},
@@ -729,7 +728,7 @@ require('lazy').setup({
         'json-lsp', -- Used for JSON language server
         'black',
         'mypy',
-        'pyright',
+        -- 'pyright',
         'ruff',
         'python-lsp-server',
         'debugpy',

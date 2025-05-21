@@ -2,7 +2,9 @@
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'cs',
   callback = function(args)
+    local config = {}
     local root_dir = vim.fs.dirname(vim.fs.find({ '.sln', '.csproj', '.git' }, { upward = true })[1])
+    --    If we use the csharp-language-server this needs to be uncommented
     vim.lsp.start {
       name = 'csharp-language-server',
       cmd = { 'csharp-language-server' },

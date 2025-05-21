@@ -76,6 +76,13 @@ return {
       suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
       -- log_level = 'debug',
     },
+    keys = {
+      {
+        '<leader>Ss',
+        '<cmd>SessionSearch<cr>',
+        desc = 'Search sessions',
+      },
+    },
   },
 
   {
@@ -187,7 +194,7 @@ return {
     end,
   },
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     config = function()
       local null_ls = require 'null-ls'
       local augroup = vim.api.nvim_create_augroup('Lsp Formatting', {})
