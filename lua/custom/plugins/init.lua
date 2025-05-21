@@ -179,9 +179,9 @@ return {
       require('lsp_signature').setup(opts)
     end,
   },
-  {
-    'psf/black',
-  },
+  --  {
+  --    'psf/black',
+  --  },
   {
     'jay-babu/mason-nvim-dap.nvim',
     dependencies = {
@@ -204,9 +204,9 @@ return {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.diagnostics.eslint,
           null_ls.builtins.completion.spell,
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.diagnostics.ruff,
+          -- null_ls.builtins.formatting.black,
+          -- null_ls.builtins.formatting.isort,
+          -- null_ls.builtins.diagnostics.ruff,
         },
         on_attach = function(client, bufnr)
           if client.supports_method 'textDocument/formatting' then
