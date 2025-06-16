@@ -676,6 +676,7 @@ require('lazy').setup({
         pyright = {},
         zls = {},
         jq = {},
+        codelldb = {},
         dockerls = {},
         shellcheck = {},
         sqlls = {},
@@ -734,6 +735,7 @@ require('lazy').setup({
         'python-lsp-server',
         'debugpy',
         'node-debug2-adapter',
+        'codelldb',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
