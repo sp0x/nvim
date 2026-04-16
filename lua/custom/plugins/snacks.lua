@@ -13,9 +13,11 @@ return {
       sources = {
         files = {
           hidden = true,
+          exclude = { 'node_modules', '.git', '__pycache__', '.venv' },
         },
         grep = {
           hidden = true,
+          exclude = { 'node_modules', '.git', '__pycache__', '.venv' },
         },
       },
     },

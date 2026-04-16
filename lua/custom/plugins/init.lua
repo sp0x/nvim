@@ -236,6 +236,7 @@ return {
       },
       'nvim-neotest/nvim-nio',
       'williamboman/mason.nvim',
+      'julianolf/nvim-dap-lldb',
     },
     config = function()
       local dap = require 'dap'
@@ -251,7 +252,10 @@ return {
         },
       }
       -- Languages
+      -- Python
       require('dap-python').setup 'uv'
+      -- LLDB
+      require('dap-lldb').setup {}
       -- Nodejs
       dap.configurations.typescript = {
         {
