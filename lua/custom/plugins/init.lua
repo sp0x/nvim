@@ -148,13 +148,7 @@ return {
       vim.keymap.set('n', 's', '<Plug>Sneak_s', { noremap = false, desc = '[s]neak' })
     end,
   },
-  {
-    'smartpde/telescope-recent-files',
-    config = function()
-      require('telescope').load_extension 'recent_files'
-      vim.api.nvim_set_keymap('n', '<Leader><Leader>', [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], { noremap = true, silent = true })
-    end,
-  },
+  -- Recent files now handled by Snacks.picker (see lua/custom/plugins/snacks.lua)
   {
     'nvimdev/lspsaga.nvim',
     config = function()
@@ -291,6 +285,14 @@ return {
         }
       end
 
+      if not dap.adapters['coreclr'] then
+        dap.adapters.coreclr = {
+          type = 'executable',
+          command = vim.fn.exepath 'netcoredbg',
+          args = { '--interpreter=vscode' },
+        }
+      end
+
       -- Virtual text
       virtualtext.setup {
         display_callback = function(variable)
@@ -308,6 +310,7 @@ return {
       vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'DAP [S]tep [O]ut' })
       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'DAP [T]oggle [B]reakpoint' })
       vim.keymap.set('n', '<leader>B', dap.set_breakpoint, { desc = 'DAP [S]et [B]reakpoint' })
+      vim.keymap.set('n', '<leader>,,', ui.close, { desc = 'Dap close ui' })
       vim.keymap.set('n', '<leader>!', function()
         ui.eval(nil, { enter = true })
       end, { desc = 'DAP [E]val' })
@@ -319,10 +322,10 @@ return {
         ui.open()
       end
       dap.listeners.before.event_terminated.dapui_config = function()
-        ui.close()
+        -- ui.close()
       end
       dap.listeners.before.event_exited.dapui_config = function()
-        ui.close()
+        -- ui.close()
       end
     end,
   },

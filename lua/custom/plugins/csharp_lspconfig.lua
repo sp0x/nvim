@@ -2,10 +2,25 @@ return {
 
   {
     'GustavEikaas/easy-dotnet.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies = { 'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim' },
     ft = { 'cs', 'vb', 'csproj', 'sln', 'slnx', 'props', 'csx', 'targets' },
     lazy = true,
     cmd = 'Dotnet',
+    config = function()
+      local dotnet = require 'easy-dotnet'
+      local lualine = require 'lualine'
+      local job_indicator = { require('easy-dotnet.ui-modules.jobs').lualine }
+      dotnet.setup {
+        lsp = {
+          auto_refresh_codelens = false,
+        },
+      }
+      lualine.setup {
+        sections = {
+          lualine_a = { 'mode', job_indicator },
+        },
+      }
+    end,
     opts = {
       terminal = function(path, action)
         local commands = {
@@ -33,14 +48,14 @@ return {
       },
     },
     keys = {
-      -- stylua: ignore start 
+      -- stylua: ignore start
       -- { "<leader>nb", function() require("easy-dotnet").build_default_quickfix() end, desc = "build" },
       { "<leader>nB", function() require("easy-dotnet").build_quickfix() end, desc = "build solution" },
-      { "<leader>nr", function() require("easy-dotnet").run_default() end, desc = "run" },
-      { "<leader>nR", function() require("easy-dotnet").run_solution() end, desc = "run solution" },
-      { "<leader>nx", function() require("easy-dotnet").clean() end, desc = "clean solution" },
-      { "<leader>na", "<cmd>Dotnet new<cr>", desc = "new item" },
-      { "<leader>nt", "<cmd>Dotnet testrunner<cr>", desc = "open test runner" },
+      { "<leader>nr", function() require("easy-dotnet").run_default() end,    desc = "run" },
+      { "<leader>nR", function() require("easy-dotnet").run_solution() end,   desc = "run solution" },
+      { "<leader>nx", function() require("easy-dotnet").clean() end,          desc = "clean solution" },
+      { "<leader>na", "<cmd>Dotnet new<cr>",                                  desc = "new item" },
+      { "<leader>nt", "<cmd>Dotnet testrunner<cr>",                           desc = "open test runner" },
       -- stylua: ignore end
     },
   },
