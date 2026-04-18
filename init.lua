@@ -687,7 +687,6 @@ require('lazy').setup({
           },
         },
         gopls = {},
-        pyright = {},
         zls = {},
         jq = {},
         codelldb = {},
@@ -711,6 +710,10 @@ require('lazy').setup({
         ---
         yamlfix = {},
         --
+        -- Javascript
+        cssls = {},
+        emmet_ls = {},
+        -- Lua
 
         lua_ls = {
           -- cmd = { ... },
@@ -739,18 +742,14 @@ require('lazy').setup({
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
+      local python_cfg = require 'vasko.python'
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'json-lsp', -- Used for JSON language server
-        'black',
-        'mypy',
-        'pyright',
-        'ruff',
-        'python-lsp-server',
-        'debugpy',
         'node-debug2-adapter',
         'codelldb',
       })
+      vim.list_extend(ensure_installed, python_cfg.ensure_installed)
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -1002,6 +1001,7 @@ require('lazy').setup({
         'vim',
         'vimdoc',
         'typescript',
+        'javascript',
         'json',
         'xml',
         'yaml',
