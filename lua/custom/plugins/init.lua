@@ -6,29 +6,7 @@
 vim.g.kommentary_create_default_mappings = false
 
 return {
-  { 'github/copilot.vim' },
-  {
-    'CopilotC-Nvim/CopilotChat.nvim',
-    dependencies = {
-      { 'github/copilot.vim' },
-    },
-    build = 'make tiktoken',
-    opts = {},
-    config = function()
-      local chat = require 'CopilotChat'
-      local select = require 'CopilotChat.select'
-      chat.setup {}
-      vim.keymap.set('n', '<leader>?', chat.toggle, { desc = 'Github copilot chat toggle' })
-      vim.keymap.set('n', '<leader>ge', function()
-        chat.ask('Explain this code to me', {
-          selection = function(source)
-            return select.line(source) or select.visual(source) or select.buffer(source)
-          end,
-          --           context = { 'buffers', 'files', 'register:+', 'selection' },
-        })
-      end, { desc = '[G]ithub Copilot [E]xplain the current line | visual block | buffer' })
-    end,
-  },
+  
   {
     'pmizio/typescript-tools.nvim',
     dependencies = {
@@ -48,23 +26,6 @@ return {
       vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', { desc = 'Toggle [U]ndo tree' })
     end,
   },
-
-  {
-    'tpope/vim-fugitive',
-    config = function()
-      vim.keymap.set('n', '<leader>G', '<cmd>Git<CR>', { desc = '[G]it' })
-      vim.keymap.set('n', '<leader>gs', '<cmd>Git status<CR>', { desc = 'Git [S]tatus' })
-      vim.keymap.set('n', '<leader>gd', '<cmd>Git diff<CR>', { desc = 'Git [D]iff' })
-      vim.keymap.set('n', '<leader>gc', '<cmd>Git commit<CR>', { desc = 'Git [C]ommit' })
-      vim.keymap.set('n', '<leader>gp', '<cmd>Git push<CR>', { desc = 'Git [P]ush' })
-      vim.keymap.set('n', '<leader>ga', '<cmd>Git add %<CR>', { desc = 'Git [A]dd' })
-      vim.keymap.set('n', '<leader>gl', '<cmd>Git log<CR>', { desc = 'Git [L]og' })
-      vim.keymap.set('n', '<leader>gb', '<cmd>Git blame<CR>', { desc = '[G]it [b]lame' })
-      -- inline blame
-      vim.keymap.set('n', '<leader>gb', '<cmd>Git blame<CR>', { desc = '[G]it [b]lame' })
-    end,
-  },
-
   {
     'rmagatti/auto-session',
     lazy = false,
@@ -75,6 +36,13 @@ return {
     opts = {
       suppressed_dirs = { '~/', '~/Projects', '~/Downloads', '/' },
       -- log_level = 'debug',
+    },
+    keys = {
+      {
+        '<leader>Ss',
+        '<cmd>SessionSearch<cr>',
+        desc = 'Search sessions',
+      },
     },
   },
 
@@ -141,13 +109,7 @@ return {
       vim.keymap.set('n', 's', '<Plug>Sneak_s', { noremap = false, desc = '[s]neak' })
     end,
   },
-  {
-    'smartpde/telescope-recent-files',
-    config = function()
-      require('telescope').load_extension 'recent_files'
-      vim.api.nvim_set_keymap('n', '<Leader><Leader>', [[<cmd>lua require('telescope').extensions.recent_files.pick()<CR>]], { noremap = true, silent = true })
-    end,
-  },
+  -- Recent files now handled by Snacks.picker (see lua/custom/plugins/snacks.lua)
   {
     'nvimdev/lspsaga.nvim',
     config = function()
@@ -172,9 +134,9 @@ return {
       require('lsp_signature').setup(opts)
     end,
   },
-  {
-    'psf/black',
-  },
+  --  {
+  --    'psf/black',
+  --  },
   {
     'jay-babu/mason-nvim-dap.nvim',
     dependencies = {
@@ -197,9 +159,9 @@ return {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.diagnostics.eslint,
           null_ls.builtins.completion.spell,
-          null_ls.builtins.formatting.black,
-          null_ls.builtins.formatting.isort,
-          null_ls.builtins.diagnostics.ruff,
+          -- null_ls.builtins.formatting.black,
+          -- null_ls.builtins.formatting.isort,
+          -- null_ls.builtins.diagnostics.ruff,
         },
         on_attach = function(client, bufnr)
           if client.supports_method 'textDocument/formatting' then
@@ -288,6 +250,14 @@ return {
         }
       end
 
+      if not dap.adapters['coreclr'] then
+        dap.adapters.coreclr = {
+          type = 'executable',
+          command = vim.fn.exepath 'netcoredbg',
+          args = { '--interpreter=vscode' },
+        }
+      end
+
       -- Virtual text
       virtualtext.setup {
         display_callback = function(variable)
@@ -305,6 +275,7 @@ return {
       vim.keymap.set('n', '<F12>', dap.step_out, { desc = 'DAP [S]tep [O]ut' })
       vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'DAP [T]oggle [B]reakpoint' })
       vim.keymap.set('n', '<leader>B', dap.set_breakpoint, { desc = 'DAP [S]et [B]reakpoint' })
+      vim.keymap.set('n', '<leader>,,', ui.close, { desc = 'Dap close ui' })
       vim.keymap.set('n', '<leader>!', function()
         ui.eval(nil, { enter = true })
       end, { desc = 'DAP [E]val' })
@@ -316,10 +287,10 @@ return {
         ui.open()
       end
       dap.listeners.before.event_terminated.dapui_config = function()
-        ui.close()
+        -- ui.close()
       end
       dap.listeners.before.event_exited.dapui_config = function()
-        ui.close()
+        -- ui.close()
       end
     end,
   },

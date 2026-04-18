@@ -14,6 +14,8 @@
 "    - restore cursor/window position after formatting
 "  1.2:
 "    - use autoload script
+"
+" Temp disable--
 
 if exists("g:load_black")
   finish
