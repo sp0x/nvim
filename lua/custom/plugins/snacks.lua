@@ -11,8 +11,12 @@ return {
     dim = {
       enabled = true,
     },
+    terminal = {
+      enabled = true,
+    },
     picker = {
       enabled = true,
+      ui_select = true,
       sources = {
         files = {
           hidden = true,
@@ -127,6 +131,22 @@ return {
         Snacks.picker.recent()
       end,
       desc = 'Recent Files',
+    },
+    {
+      '<C-\\>',
+      function()
+        Snacks.terminal.toggle()
+      end,
+      desc = 'Toggle Terminal',
+      mode = { 'n', 't' },
+    },
+    {
+      '<C-/>',
+      function()
+        Snacks.terminal.open()
+      end,
+      desc = 'Open Terminal',
+      mode = { 'n', 't' },
     },
   },
   init = function()
