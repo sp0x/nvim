@@ -6,7 +6,7 @@
 vim.g.kommentary_create_default_mappings = false
 
 return {
-  
+
   {
     'pmizio/typescript-tools.nvim',
     dependencies = {
@@ -26,9 +26,6 @@ return {
       vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>', { desc = 'Toggle [U]ndo tree' })
     end,
   },
-
-
-
   {
     'rmagatti/auto-session',
     lazy = false,
@@ -162,9 +159,6 @@ return {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.diagnostics.eslint,
           null_ls.builtins.completion.spell,
-          -- null_ls.builtins.formatting.black,
-          -- null_ls.builtins.formatting.isort,
-          -- null_ls.builtins.diagnostics.ruff,
         },
         on_attach = function(client, bufnr)
           if client.supports_method 'textDocument/formatting' then
