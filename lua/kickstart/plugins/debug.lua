@@ -6,6 +6,8 @@
 -- be extended to other languages as well. That's why it's called
 -- kickstart.nvim and not kitchen-sink.nvim ;)
 
+local overseer_toggled_for_dap = false
+
 return {
   -- NOTE: Yes, you can install new plugins here!
   'mfussenegger/nvim-dap',
@@ -30,6 +32,8 @@ return {
     {
       '<F5>',
       function()
+        vim.cmd 'OverseerToggle'
+        overseer_toggled_for_dap = true
         require('dap').continue()
       end,
       desc = 'Debug: Start/Continue',
@@ -133,7 +137,13 @@ return {
     --   vim.fn.sign_define(tp, { text = icon, texthl = hl, numhl = hl })
     -- end
 
-    dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+    dap.listeners.after.event_initialized['dapui_config'] = function()
+      dapui.open()
+      if overseer_toggled_for_dap then
+        vim.cmd 'OverseerToggle'
+        overseer_toggled_for_dap = false
+      end
+    end
     dap.listeners.before.event_terminated['dapui_config'] = dapui.close
     dap.listeners.before.event_exited['dapui_config'] = dapui.close
 

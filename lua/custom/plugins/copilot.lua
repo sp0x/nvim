@@ -13,17 +13,11 @@ return {
       local select = require 'CopilotChat.select'
       chat.setup {
         model = 'gpt-5.2-codex',
-        temperature = 0.1,
-        trusted_tools = { 'buffer', 'file', 'glob', 'grep', 'gitdiff', 'register', 'selection',
-         'diagnostic', 'todo', 'command', 'clipboard'
-       },
-        -- Enter insert mode when opening chat
-        auto_insert_mode = true,
         -- Show virtual-text help while waiting for input
-        show_help = true,
-
       }
-      vim.keymap.set('n', '<leader>?', chat.toggle, { desc = 'Github copilot chat toggle' })
+      vim.keymap.set('n', '<leader>?', function()
+        chat.toggle { resources = 'buffer' }
+      end, { desc = 'Github copilot chat toggle' })
       vim.keymap.set('n', '<leader>cq', function()
         local input = vim.fn.input 'Quick Chat: '
         if input ~= '' then
@@ -39,7 +33,7 @@ return {
           --           context = { 'buffers', 'files', 'register:+', 'selection' },
         })
       end, { desc = '[G]ithub Copilot [E]xplain the current line | visual block | buffer' })
-      
+
       -- Review selection / buffer
       vim.keymap.set({ 'n', 'v' }, '<leader>cr', function()
         chat.ask '/Review'
