@@ -341,6 +341,9 @@ require('lazy').setup({
       },
     },
     dependencies = {
+      -- Snacks must be loaded before LSP so picker functions are available in LspAttach callbacks
+      'folke/snacks.nvim',
+
       -- Automatically install LSPs and related tools to stdpath for Neovim
       { 'williamboman/mason.nvim', config = true }, -- NOTE: Must be loaded before dependants
       'williamboman/mason-lspconfig.nvim',
@@ -580,7 +583,6 @@ require('lazy').setup({
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
         'json-lsp', -- Used for JSON language server
-        'node-debug2-adapter',
         -- Typescript
         'eslint-lsp',
         -- 'ts_ls', -- We are using typescipt_tools instead

@@ -233,8 +233,10 @@ return {
       local mason_path = vim.fn.glob(vim.fn.stdpath 'data' .. '/mason/')
       dap.adapters.node = {
         type = 'executable',
-        command = 'node',
-        args = { mason_path .. 'package/node-debug2-adapter/out/src/nodeDebug.js' },
+        command = mason_path .. 'packages/js-debug-adapter/js-debug/src/dapDebugServer.js',
+        options = {
+          detached = true,
+        },
       }
 
       -- CSharp
