@@ -78,3 +78,7 @@ vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,
 vim.cmd 'colorscheme retrobox'
 -- wl-clipboard integration
 vim.opt.clipboard = 'unnamedplus'
+
+-- Pane related settings
+vim.opt.cursorbind = false
+vim.opt.scrollbind = false
