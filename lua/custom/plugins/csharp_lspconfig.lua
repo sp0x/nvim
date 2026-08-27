@@ -14,6 +14,12 @@ return {
         lsp = {
           auto_refresh_codelens = false,
         },
+        auto_bootstrap_namespace = {
+          enabled = false,
+        },
+        debugger = {
+          engine = 'sharpdbg', -- "netcoredbg" or "dncdbg" or "sharpdbg"
+        },
       }
       lualine.setup {
         sections = {

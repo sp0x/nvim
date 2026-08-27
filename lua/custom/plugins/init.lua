@@ -18,6 +18,10 @@ return {
       require('typescript-tools').setup {}
     end,
   },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    opts = { multiwindow = true, line_numbers = false, multiline_threshold = 2 },
+  },
 
   {
     'mbbill/undotree',
@@ -350,6 +354,14 @@ return {
   {
     -- Multi cursor plugin
     'mg979/vim-visual-multi',
+    keys = {
+      { '<C-Down>' },
+      { '<C-Up>' },
+      { '<M-Down>' },
+      { '<M-Up>' },
+      { '<C-n>' },
+      { '<Leader>m' },
+    },
   },
   {
     'stevearc/overseer.nvim',

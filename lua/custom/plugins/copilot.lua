@@ -12,7 +12,7 @@ return {
       local chat = require 'CopilotChat'
       local select = require 'CopilotChat.select'
       chat.setup {
-        model = 'gpt-5.2-codex',
+        model = 'gpt-5.3-codex',
         -- Show virtual-text help while waiting for input
       }
       vim.keymap.set('n', '<leader>?', function()

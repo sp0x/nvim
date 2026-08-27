@@ -17,6 +17,8 @@ vim.signcolumn = 'yes'
 -- vim.opt.isfname:append '@@'
 
 vim.opt.updatetime = 50
+vim.opt.lazyredraw = true
+vim.opt.synmaxcol = 240
 vim.opt.colorcolumn = '80'
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -25,8 +27,8 @@ vim.g.maplocalleader = ' '
 vim.opt.foldlevel = 99
 vim.foldopen = 'all'
 
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.opt.foldmethod = 'manual'
+vim.opt.foldexpr = '0'
 vim.opt.foldcolumn = '0'
 vim.opt.foldtext = ''
 vim.opt.foldlevelstart = 3
@@ -75,7 +77,7 @@ vim.opt.titlelen = 80 -- Maximum length of the title
 -- vim.opt.titlestring = '%{expand("%:p")} [%{mode()}]'
 vim.opt.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')})]]
 vim.o.sessionoptions = 'blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions'
-vim.cmd 'colorscheme retrobox'
+-- vim.cmd 'colorscheme retrobox'
 -- wl-clipboard integration
 vim.opt.clipboard = 'unnamedplus'
 
