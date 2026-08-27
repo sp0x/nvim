@@ -11,7 +11,7 @@ return {
       vim.keymap.set({ 'n', 'x' }, '<C-a>', function()
         o.ask '@this: '
       end, { desc = 'Ask opencode' })
-      vim.keymap.set({ 'n', 'x' }, '<C-o>', function()
+      vim.keymap.set({ 'n', 'x' }, '<C-x>', function()
         o.select()
       end, { desc = 'Select opencode' })
       vim.keymap.set({ 'n', 'x' }, 'go', function()

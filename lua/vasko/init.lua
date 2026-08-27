@@ -17,7 +17,8 @@ vim.signcolumn = 'yes'
 -- vim.opt.isfname:append '@@'
 
 vim.opt.updatetime = 50
-vim.opt.lazyredraw = true
+-- Turn off lazy redraw because noice has problems with it.
+-- vim.opt.lazyredraw = true
 vim.opt.synmaxcol = 240
 vim.opt.colorcolumn = '80'
 vim.g.mapleader = ' '
