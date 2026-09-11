@@ -5,7 +5,26 @@
 
 vim.g.kommentary_create_default_mappings = false
 
-return {
+local disabled = {}
+for name in (vim.env.NVIM_DISABLE_PLUGINS or ''):gmatch('[^,]+') do
+  disabled[vim.trim(name)] = true
+end
+
+local function is_enabled(spec)
+  if type(spec) ~= 'table' then
+    return true
+  end
+
+  local repo = spec[1]
+  if type(repo) ~= 'string' then
+    return true
+  end
+
+  local short = repo:match '/([^/]+)$' or repo
+  return not (disabled[repo] or disabled[short])
+end
+
+local plugins = {
 
   {
     'pmizio/typescript-tools.nvim',
@@ -300,6 +319,7 @@ return {
   {
     'daic0r/dap-helper.nvim',
     dependencies = { 'rcarriga/nvim-dap-ui', 'mfussenegger/nvim-dap' },
+    cmd = { 'DapHelperSetLaunchArgs', 'DapHelperSetBuildCommand', 'DapHelperReset' },
     config = function()
       require('dap-helper').setup()
     end,
@@ -409,3 +429,9 @@ return {
     },
   },
 }
+
+if vim.tbl_isempty(disabled) then
+  return plugins
+end
+
+return vim.tbl_filter(is_enabled, plugins)
