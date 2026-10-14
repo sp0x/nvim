@@ -107,7 +107,7 @@ if enable_custom_plugins then
   if custom_import == 'all' then
     custom_specs = { { import = 'custom.plugins' } }
   elseif custom_import ~= 'none' then
-    for module in custom_import:gmatch('[^,]+') do
+    for module in custom_import:gmatch '[^,]+' do
       custom_specs[#custom_specs + 1] = { import = 'custom.plugins.' .. vim.trim(module) }
     end
   end
